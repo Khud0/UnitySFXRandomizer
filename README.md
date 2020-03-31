@@ -3,7 +3,7 @@
 YouTube tutorial link: "NOT_UPLOADED_YET";
 
 SFXPlayer class can:
-1. Play a sound effect with random pitch to add variation to the game.
+1. Play a sound effect with a random pitch to add variation to the game.
 2. Play a sound effect with its normal pitch.
 3. Use any of the above methods on a random SFX from the provided array.
 
