@@ -26,8 +26,8 @@ public class ButtonSound : MonoBehaviour
     #region Play SFX Using Comma-Separated Arguments
     // This code is just as viable as the code above.
     /*
-    [SerializeField] private AudioClip[] soundEffect1 = default;
-    [SerializeField] private AudioClip[] soundEffect2 = default;
+    [SerializeField] private AudioClip soundEffect1 = default;
+    [SerializeField] private AudioClip soundEffect2 = default;
 
     private void PlayClickSFX()
     {

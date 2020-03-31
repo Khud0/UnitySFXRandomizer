@@ -1,6 +1,6 @@
 # UnitySFXRandomizer
 
-YouTube tutorial link: "NOT_UPLOADED_YET";
+YouTube tutorial link: https://youtu.be/BJHbEMobMQA;
 
 SFXPlayer class can:
 1. Play a sound effect with a random pitch to add variation to the game.
