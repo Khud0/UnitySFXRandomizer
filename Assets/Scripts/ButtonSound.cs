@@ -20,7 +20,7 @@ public class ButtonSound : MonoBehaviour
 
     private void PlayClickSFX()
     {
-        SFXPlayer.instance.PlaySFX(true, soundEffects);
+        SFXPlayerIdea.instance.PlaySFX(true, soundEffects);
     }
 
     #endregion

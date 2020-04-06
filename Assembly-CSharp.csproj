@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ButtonSound.cs" />
     <Compile Include="Assets\Scripts\SFXPlayer.cs" />
+    <Compile Include="Assets\Scripts\SFXPlayerIdea.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Files/Unity Projects/Unity SFX Randomizer/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

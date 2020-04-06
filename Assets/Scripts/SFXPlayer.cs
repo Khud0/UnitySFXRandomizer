@@ -1,6 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+// This SFXPlayer won't destroy itself when you load the next scene (level).
+// Only one SFXPlayer can exist at the time, any new instance will be instantly destroyed.
+// Since "instance" is a static member, 
+//      SFXPlayer can (usually) be accessed from any other script in the game by using SFXPlayer.instance
+//      Instead of FindObjectOfType<SFXPlayer>();
 
 public class SFXPlayer : MonoBehaviour
 {
@@ -13,11 +17,11 @@ public class SFXPlayer : MonoBehaviour
     [SerializeField] private float maxPitch = 1.50f;
     private readonly float desctructionDelay = 0.25f;
 
-    // This SFXPlayer won't destroy itself when you load the next scene (level).
-    // Only one SFXPlayer can exist at the time, any new instance will be instantly destroyed.
-    // Since "instance" is a static member, 
-    //      SFXPlayer can (usually) be accessed from any other script in the game by using SFXPlayer.instance
-    //      Instead of FindObjectOfType<SFXPlayer>();
+    private AudioSource[] sfxSources;   // Sources that the script will loop through to avoid sound interruption.
+    private int sfxSourceCurrent = 0;   // Index of AudioSource that will be used for next PlaySFX().
+    private int sfxSourceAmount = 5;    // Feel free to change this number to achieve desired results.
+
+    
     private void Awake()
     {
         #region Singleton
@@ -32,6 +36,14 @@ public class SFXPlayer : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         #endregion
+
+        // Instantiate the pool of AudioSources once, so that you don't have to re-create them all the time (saves performance).
+        sfxSources = new AudioSource[sfxSourceAmount];
+        for (int i=0; i<sfxSourceAmount; i++)
+        {
+            sfxSources[i] = gameObject.AddComponent<AudioSource>();
+            sfxSources[i].loop = false;
+        }
     }
 
     // ("params" from Microsoft documentation: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/params):
@@ -57,15 +69,16 @@ public class SFXPlayer : MonoBehaviour
         AudioClip clipToPlay = clips[randomIndex];
 
         // Create a new AudioSource with its own pitch and play the sound effect with its help.
-        AudioSource sfxSource = gameObject.AddComponent<AudioSource>();
+        AudioSource sfxSource = sfxSources[sfxSourceCurrent];
         sfxSource.clip = clipToPlay;
         sfxSource.pitch = newPitch;
         sfxSource.volume = sfxVolume;
         sfxSource.loop = false;
         sfxSource.Play();
 
-        // Since we will no longer use it, destroy the AudioSource after the clip has finished playing. The delay is added "just in case".
-        Destroy(sfxSource, clipToPlay.length + desctructionDelay);
+        // Play every SFX on a new AudioSource to avoid sound interruption when multiple SFX are played at once.
+        if (sfxSourceCurrent < sfxSourceAmount-1) sfxSourceCurrent += 1; 
+        else sfxSourceCurrent = 0;
     }
 }
     
