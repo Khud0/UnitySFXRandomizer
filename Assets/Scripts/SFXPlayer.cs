@@ -10,16 +10,17 @@ public class SFXPlayer : MonoBehaviour
 {
     public static SFXPlayer instance = null;
 
+    // Feel free to change this number to achieve desired results.
+    [SerializeField]private int sfxSourceAmount = 5;    
     [SerializeField] private float sfxVolume = 1f;
     // Pitch is exaggerated in this example, normally you'd use 0.9f to 1.1f or similar.
     // Play with minPitch and maxPitch values in the Editor until you achieve the desired effect.
     [SerializeField] private float minPitch = .50f;
     [SerializeField] private float maxPitch = 1.50f;
-    private readonly float desctructionDelay = 0.25f;
 
     private AudioSource[] sfxSources;   // Sources that the script will loop through to avoid sound interruption.
     private int sfxSourceCurrent = 0;   // Index of AudioSource that will be used for next PlaySFX().
-    private int sfxSourceAmount = 5;    // Feel free to change this number to achieve desired results.
+    
 
     
     private void Awake()
@@ -42,6 +43,7 @@ public class SFXPlayer : MonoBehaviour
         for (int i=0; i<sfxSourceAmount; i++)
         {
             sfxSources[i] = gameObject.AddComponent<AudioSource>();
+            sfxSources[i].playOnAwake = false;
             sfxSources[i].loop = false;
         }
     }
